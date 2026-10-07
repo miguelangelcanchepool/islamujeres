@@ -149,11 +149,6 @@ export default function HomePage() {
         <div className="measure-copy">
           <p className="chapter-kicker">La medida</p>
           <h2>Una isla que se aprende de norte a sur.</h2>
-          <p>
-            Está en el Caribe mexicano, al noreste de Cancún. Se llega en
-            ferry —el cruce breve sale de Puerto Juárez— y se recorre, sobre
-            todo, a pie o en carrito de golf.
-          </p>
           <ul className="stats">
             <li>
               <b>7 km</b>
@@ -168,6 +163,11 @@ export default function HomePage() {
               <span>de tierra firme</span>
             </li>
           </ul>
+          <p>
+            Está en el Caribe mexicano, al noreste de Cancún. Se llega en
+            ferry —el cruce breve sale de Puerto Juárez— y se recorre, sobre
+            todo, a pie o en carrito de golf.
+          </p>
         </div>
         <div className="atlas">
           <IslandSilhouette />
@@ -183,17 +183,19 @@ export default function HomePage() {
       </section>
 
       <section className="gates" aria-label="Capítulos">
-        {gates.map((gate) => (
+        {gates.map((gate, index) => (
           <Link
             key={gate.href}
             href={gate.href}
-            className="gate"
+            className={index === 0 ? "gate gate-lead" : "gate"}
             aria-label={`${gate.index}. ${gate.title}. ${gate.text}`}
           >
             <div className="gate-photo">
               <Photo
                 image={gate.image}
-                sizes="(max-width: 800px) 100vw, 58vw"
+                sizes={
+                  index === 0 ? "100vw" : "(max-width: 719px) 100vw, 50vw"
+                }
               />
             </div>
             <div className="gate-copy">
@@ -211,29 +213,37 @@ export default function HomePage() {
           <h2 id="aliados-titulo">Aliados de la isla</h2>
           <p>Empresas y marcas que creen en compartir lo mejor de Isla Mujeres.</p>
         </div>
-        <ul className="allies-list">
-          {allies.map((ally, index) => (
-            <li key={ally.name}>
-              <a
-                className="ally"
-                href={ally.href}
-                style={{ animationDelay: `${index * 90}ms` }}
-              >
-                {ally.logo ? (
-                  <Image
-                    className="ally-logo"
-                    src={ally.logo}
-                    alt=""
-                    width={120}
-                    height={32}
-                  />
-                ) : null}
-                <span className="ally-name">{ally.name}</span>
-                <span className="ally-label">{ally.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="allies-rail">
+          <span className="allies-nav" aria-hidden="true">
+            ←
+          </span>
+          <ul className="allies-list">
+            {allies.map((ally, index) => (
+              <li key={ally.name}>
+                <a
+                  className="ally"
+                  href={ally.href}
+                  style={{ animationDelay: `${index * 90}ms` }}
+                >
+                  {ally.logo ? (
+                    <Image
+                      className="ally-logo"
+                      src={ally.logo}
+                      alt=""
+                      width={120}
+                      height={32}
+                    />
+                  ) : null}
+                  <span className="ally-name">{ally.name}</span>
+                  <span className="ally-label">{ally.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <span className="allies-nav" aria-hidden="true">
+            →
+          </span>
+        </div>
       </section>
 
       <section className="close-band">

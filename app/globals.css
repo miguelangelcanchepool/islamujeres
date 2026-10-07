@@ -416,13 +416,13 @@ a {
   overflow: hidden;
   background: var(--shell);
   color: var(--ink);
+  padding: clamp(2.75rem, 6vw, 4.6rem) var(--pad);
 }
 
 .manifesto .chapter-kicker,
 .essay .chapter-kicker,
 .tone-shell .chapter-kicker,
-.tone-sand .chapter-kicker,
-.gate:nth-child(odd) .chapter-kicker {
+.tone-sand .chapter-kicker {
   color: var(--lagoon);
 }
 
@@ -433,7 +433,7 @@ a {
   margin: 0;
   font-family: var(--font-serif), Georgia, serif;
   font-style: italic;
-  font-size: 26vw;
+  font-size: 18vw;
   line-height: 0.8;
   color: transparent;
   -webkit-text-stroke: 1px rgba(20, 32, 40, 0.14);
@@ -452,8 +452,12 @@ a {
 }
 
 .manifesto h2 {
-  max-width: 12ch;
-  font-size: clamp(3.4rem, 8vw, 7rem);
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 5.2vw, 4.4rem);
+}
+
+.manifesto .chapter-kicker {
+  margin-bottom: 0.65rem;
 }
 
 .manifesto-grid,
@@ -464,8 +468,17 @@ a {
 }
 
 .manifesto-grid {
-  margin-top: 2rem;
+  margin-top: 1.1rem;
   max-width: 68rem;
+  gap: 1rem 2.5rem;
+}
+
+.manifesto-grid p {
+  margin-bottom: 0.65rem;
+}
+
+.manifesto-grid p:last-child {
+  margin-bottom: 0;
 }
 
 .essay {
@@ -489,17 +502,29 @@ a {
     radial-gradient(ellipse at 80% 20%, rgba(26, 168, 174, 0.18), transparent 42%),
     var(--abyss);
   align-items: center;
+  gap: 1.35rem;
+  padding: clamp(2.6rem, 5.5vw, 4.2rem) var(--pad);
+}
+
+.measure .chapter-kicker {
+  margin-bottom: 0.55rem;
 }
 
 .measure h2 {
-  max-width: 10ch;
-  font-size: clamp(3.2rem, 6vw, 5.6rem);
+  max-width: 16ch;
+  font-size: clamp(2.3rem, 4.4vw, 3.5rem);
+}
+
+.measure-copy > p {
+  max-width: 38rem;
+  margin: 1rem 0 0;
 }
 
 .stats {
   display: grid;
-  gap: 1.2rem;
-  margin: 2rem 0 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 1.15rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -507,33 +532,36 @@ a {
 .stats b {
   display: block;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(3rem, 6vw, 4.6rem);
+  font-size: clamp(1.85rem, 3.6vw, 3.15rem);
   font-weight: 500;
   font-style: italic;
   line-height: 0.9;
 }
 
 .stats span {
+  display: block;
   color: var(--sand);
-  font-size: 0.92rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
 }
 
 .atlas {
   display: grid;
   justify-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .island-svg {
-  width: min(46vw, 220px);
+  width: min(26vw, 96px);
   height: auto;
-  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.28));
 }
 
 .atlas-marks {
   display: grid;
-  gap: 0.85rem;
-  width: min(100%, 22rem);
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem 1.1rem;
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -542,13 +570,18 @@ a {
 .atlas-marks li {
   display: flex;
   flex-direction: column;
-  padding-top: 0.75rem;
+  min-width: 0;
+  padding-top: 0.5rem;
   border-top: 1px solid var(--line);
+}
+
+.atlas-marks li:last-child {
+  grid-column: 1 / -1;
 }
 
 .atlas-marks strong {
   font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.55rem;
+  font-size: 1.2rem;
   font-weight: 500;
   font-style: italic;
 }
@@ -559,13 +592,23 @@ a {
 }
 
 .gates {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.45rem;
   background: var(--abyss);
 }
 
 .gate {
-  display: grid;
-  min-height: 88vh;
+  position: relative;
+  display: block;
+  min-height: 15.5rem;
+  overflow: hidden;
+  color: var(--shell);
   text-decoration: none;
+}
+
+.gate-lead {
+  min-height: 26rem;
 }
 
 .gate-photo,
@@ -576,7 +619,9 @@ a {
 }
 
 .gate-photo {
-  min-height: 62vh;
+  position: absolute;
+  inset: 0;
+  min-height: 0;
 }
 
 .gate-photo .photo,
@@ -590,29 +635,45 @@ a {
 }
 
 .gate-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(2rem, 5vw, 4rem);
+  padding: 1.15rem 1.15rem 1.2rem;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 22, 30, 0.04) 16%,
+    rgba(7, 22, 30, 0.22) 48%,
+    rgba(7, 22, 30, 0.84) 100%
+  );
+  color: var(--shell);
+}
+
+.gate .chapter-kicker {
+  margin-bottom: 0.35rem;
+  color: var(--aqua);
 }
 
 .gate-copy h2 {
-  margin: 0 0 1rem;
-  font-size: clamp(3.6rem, 7vw, 6.5rem);
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.85rem, 4.5vw, 2.35rem);
+}
+
+.gate-lead .gate-copy h2 {
+  font-size: clamp(2.8rem, 6vw, 4.6rem);
 }
 
 .gate-copy p:last-of-type {
-  max-width: 28rem;
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
 }
 
-.gate:nth-child(odd) .gate-copy {
-  background: var(--shell);
-  color: var(--ink);
-}
-
-.gate:nth-child(even) .gate-copy {
-  background: var(--deep);
-  color: var(--shell);
+.gate-lead .gate-copy {
+  padding: clamp(1.25rem, 3vw, 2.2rem);
 }
 
 .gate .photo-img {
@@ -628,7 +689,7 @@ a {
   overflow-x: clip;
   background: var(--deep);
   color: var(--shell);
-  padding: clamp(4.5rem, 9vw, 7.5rem) var(--pad);
+  padding: clamp(2.2rem, 4.5vw, 3.3rem) var(--pad);
 }
 
 .allies-intro {
@@ -638,9 +699,9 @@ a {
 }
 
 .allies h2 {
-  max-width: 14ch;
+  max-width: 16ch;
   margin: 0;
-  font-size: clamp(2.15rem, 4vw, 3.15rem);
+  font-size: clamp(1.7rem, 2.8vw, 2.25rem);
   font-weight: 500;
   font-style: italic;
   line-height: 1;
@@ -653,13 +714,31 @@ a {
   color: var(--sand);
 }
 
+.allies-rail {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.allies-nav {
+  display: none;
+  color: rgba(231, 211, 180, 0.55);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
 .allies-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.4rem 1.25rem;
-  margin: clamp(2.75rem, 6vw, 4.5rem) 0 0;
-  padding: clamp(1.75rem, 4vw, 2.6rem) 0 0;
-  border-top: 1px solid var(--line);
+  gap: 1.15rem 0.85rem;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -673,7 +752,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.28rem;
   min-width: 0;
   text-align: center;
   text-decoration: none;
@@ -715,11 +794,16 @@ a {
 .close-band {
   background: var(--palm-deep);
   color: var(--sand);
+  padding: clamp(2.8rem, 6vw, 4.5rem) var(--pad);
+}
+
+.close-band .chapter-kicker {
+  margin-bottom: 0.6rem;
 }
 
 .close-band h2 {
-  max-width: 12ch;
-  font-size: clamp(3.2rem, 7vw, 6rem);
+  max-width: 14ch;
+  font-size: clamp(2.45rem, 5vw, 4.1rem);
 }
 
 .close-band p {
@@ -1132,19 +1216,34 @@ a {
     align-items: end;
   }
 
+  .manifesto-grid {
+    gap: 1rem 2.25rem;
+    align-items: start;
+  }
+
   .measure {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 3rem;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.5rem 2.25rem;
   }
 
   .atlas {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
     justify-items: start;
+    gap: 0.85rem 1.15rem;
   }
 
   .island-svg {
-    width: min(28vw, 250px);
+    width: min(14vw, 124px);
+  }
+
+  .atlas-marks {
+    grid-template-columns: 1fr;
+    width: min(100%, 16rem);
+  }
+
+  .atlas-marks li:last-child {
+    grid-column: auto;
   }
 
   .time,
@@ -1153,22 +1252,6 @@ a {
     grid-template-columns: minmax(9rem, 0.7fr) 1.4fr;
     gap: 2rem;
     align-items: start;
-  }
-
-  .gate {
-    grid-template-columns: 1.15fr 0.85fr;
-  }
-
-  .gate:nth-child(even) {
-    grid-template-columns: 0.85fr 1.15fr;
-  }
-
-  .gate:nth-child(even) .gate-photo {
-    order: 2;
-  }
-
-  .gate-photo {
-    min-height: 88vh;
   }
 
   .place {
@@ -1209,14 +1292,18 @@ a {
   }
 
   .allies-intro {
-    grid-template-columns: minmax(14rem, 0.75fr) 1.1fr;
-    gap: 2rem 3rem;
+    grid-template-columns: minmax(12rem, 0.7fr) 1.1fr;
+    gap: 0.75rem 2rem;
     align-items: end;
+  }
+
+  .allies-nav {
+    display: block;
   }
 
   .allies-list {
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1.5rem 1.25rem;
+    gap: 0.75rem;
   }
 
   .allies-list li:last-child {
@@ -1231,6 +1318,29 @@ a {
 
   .footer-note {
     grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 720px) {
+  .gates {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gate {
+    min-height: min(34vh, 21rem);
+  }
+
+  .gate-lead {
+    grid-column: 1 / -1;
+    min-height: min(56vh, 34rem);
+  }
+
+  .gate-copy h2 {
+    font-size: clamp(1.7rem, 2.2vw, 2.35rem);
+  }
+
+  .gate-lead .gate-copy h2 {
+    font-size: clamp(3.1rem, 4.8vw, 4.6rem);
   }
 }
 
