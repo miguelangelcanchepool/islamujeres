@@ -624,6 +624,94 @@ a {
   transform: scale(1.045);
 }
 
+.allies {
+  overflow-x: clip;
+  background: var(--deep);
+  color: var(--shell);
+  padding: clamp(4.5rem, 9vw, 7.5rem) var(--pad);
+}
+
+.allies-intro {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 64rem;
+}
+
+.allies h2 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.15rem, 4vw, 3.15rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1;
+}
+
+.allies-intro p {
+  max-width: 28rem;
+  margin: 0;
+  font-weight: 300;
+  color: var(--sand);
+}
+
+.allies-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.4rem 1.25rem;
+  margin: clamp(2.75rem, 6vw, 4.5rem) 0 0;
+  padding: clamp(1.75rem, 4vw, 2.6rem) 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.allies-list li:last-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 11rem);
+}
+
+.ally {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  text-align: center;
+  text-decoration: none;
+  animation: rise 0.9s ease both;
+}
+
+.ally-logo {
+  width: auto;
+  max-width: 6.5rem;
+  height: auto;
+  max-height: 1.6rem;
+  object-fit: contain;
+}
+
+.ally-name {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(0.82rem, 1.2vw, 0.98rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  text-wrap: balance;
+  transition: color 0.4s ease;
+}
+
+.ally-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sand);
+}
+
+.ally:hover .ally-name,
+.ally:focus-visible .ally-name {
+  color: var(--aqua);
+}
+
 .close-band {
   background: var(--palm-deep);
   color: var(--sand);
@@ -1120,6 +1208,23 @@ a {
     grid-template-columns: 1fr 1fr;
   }
 
+  .allies-intro {
+    grid-template-columns: minmax(14rem, 0.75fr) 1.1fr;
+    gap: 2rem 3rem;
+    align-items: end;
+  }
+
+  .allies-list {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.5rem 1.25rem;
+  }
+
+  .allies-list li:last-child {
+    grid-column: auto;
+    justify-self: stretch;
+    width: auto;
+  }
+
   .site-footer {
     grid-template-columns: 1.3fr 1fr;
   }
@@ -1135,7 +1240,8 @@ a {
   }
 
   .hero-copy,
-  .gate .photo-img {
+  .gate .photo-img,
+  .ally {
     animation: none;
     transition: none;
   }
