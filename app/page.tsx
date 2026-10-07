@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { AlliesSection } from "@/components/AlliesSection";
 import { IslandSilhouette } from "@/components/IslandSilhouette";
 import { Photo } from "@/components/Photo";
 import { media } from "@/lib/media";
@@ -40,21 +40,6 @@ const gates = [
     text: "Un día entero, de la primera luz al oeste dorado.",
     image: media.plaza,
   },
-];
-
-type Ally = {
-  name: string;
-  label: string;
-  logo: string | null;
-  href: string;
-};
-
-const allies: Ally[] = [
-  { name: "ISLA MARINA", label: "DEMO", logo: null, href: "#" },
-  { name: "CARIBE TOURS", label: "DEMO", logo: null, href: "#" },
-  { name: "MAYA BEACH", label: "DEMO", logo: null, href: "#" },
-  { name: "MAR AZUL", label: "DEMO", logo: null, href: "#" },
-  { name: "ISLA LIFE", label: "DEMO", logo: null, href: "#" },
 ];
 
 const marks = [
@@ -208,43 +193,7 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="allies" id="aliados" aria-labelledby="aliados-titulo">
-        <div className="allies-intro">
-          <h2 id="aliados-titulo">Aliados de la isla</h2>
-          <p>Empresas y marcas que creen en compartir lo mejor de Isla Mujeres.</p>
-        </div>
-        <div className="allies-rail">
-          <span className="allies-nav" aria-hidden="true">
-            ←
-          </span>
-          <ul className="allies-list">
-            {allies.map((ally, index) => (
-              <li key={ally.name}>
-                <a
-                  className="ally"
-                  href={ally.href}
-                  style={{ animationDelay: `${index * 90}ms` }}
-                >
-                  {ally.logo ? (
-                    <Image
-                      className="ally-logo"
-                      src={ally.logo}
-                      alt=""
-                      width={120}
-                      height={32}
-                    />
-                  ) : null}
-                  <span className="ally-name">{ally.name}</span>
-                  <span className="ally-label">{ally.label}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <span className="allies-nav" aria-hidden="true">
-            →
-          </span>
-        </div>
-      </section>
+      <AlliesSection />
 
       <section className="close-band">
         <p className="chapter-kicker">Para empezar</p>

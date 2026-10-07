@@ -699,12 +699,15 @@ a {
 }
 
 .allies h2 {
-  max-width: 16ch;
+  max-width: none;
   margin: 0;
-  font-size: clamp(1.7rem, 2.8vw, 2.25rem);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
   font-weight: 500;
   font-style: italic;
-  line-height: 1;
+  letter-spacing: 0.14em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .allies-intro p {
@@ -718,45 +721,86 @@ a {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.75rem;
-  margin-top: 1.2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
+  gap: 0.2rem;
+  margin-top: 1.35rem;
 }
 
 .allies-nav {
-  display: none;
-  color: rgba(231, 211, 180, 0.55);
-  font-size: 0.95rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2.4rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--sand);
+  font: inherit;
+  font-size: 1.15rem;
   line-height: 1;
-  pointer-events: none;
-  user-select: none;
+  cursor: pointer;
+  transition: color 0.35s ease;
 }
 
-.allies-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.15rem 0.85rem;
+.allies-nav:hover,
+.allies-nav:focus-visible {
+  color: var(--aqua);
+}
+
+.allies-nav:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.allies-viewport {
+  container-type: inline-size;
+  min-width: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.allies-track {
+  --visible: 1;
+  --index: 0;
+  display: flex;
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
+  transform: translateX(calc(var(--index) * -100% / var(--visible)));
+  transition: transform 0.7s ease;
 }
 
-.allies-list li:last-child {
-  grid-column: 1 / -1;
-  justify-self: center;
-  width: min(100%, 11rem);
+.allies-track.is-instant {
+  transition: none;
+}
+
+.ally-slide {
+  flex: 0 0 calc(100% / var(--visible));
+  min-width: 0;
 }
 
 .ally {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.28rem;
-  min-width: 0;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 4.6rem;
+  margin: 0 0.15rem;
+  padding: 0.35rem 0.7rem 0.45rem;
   text-align: center;
   text-decoration: none;
-  animation: rise 0.9s ease both;
+}
+
+.ally-slide + .ally-slide .ally::before {
+  content: "";
+  position: absolute;
+  top: 22%;
+  bottom: 22%;
+  left: 0;
+  width: 1px;
+  background: var(--line);
 }
 
 .ally-logo {
@@ -769,7 +813,7 @@ a {
 
 .ally-name {
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(0.82rem, 1.2vw, 0.98rem);
+  font-size: clamp(0.84rem, 1.3vw, 1.05rem);
   font-weight: 500;
   letter-spacing: 0.12em;
   line-height: 1.25;
@@ -789,6 +833,77 @@ a {
 .ally:hover .ally-name,
 .ally:focus-visible .ally-name {
   color: var(--aqua);
+}
+
+.allies-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.15rem;
+  margin-top: 0.85rem;
+}
+
+.allies-dot {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.allies-dot::before {
+  content: "";
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: rgba(231, 211, 180, 0.38);
+  transition: background 0.35s ease, transform 0.35s ease;
+}
+
+.allies-dot.is-current::before {
+  background: var(--sand);
+  transform: scale(1.15);
+}
+
+.allies-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.15rem;
+  color: var(--sand);
+  font-size: 0.92rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.35s ease;
+}
+
+.allies-cta::after {
+  content: "→";
+}
+
+.allies-cta:hover,
+.allies-cta:focus-visible {
+  color: var(--aqua);
+}
+
+@container (min-width: 34rem) {
+  .allies-track {
+    --visible: 2;
+  }
+}
+
+@container (min-width: 48rem) {
+  .allies-track {
+    --visible: 3;
+  }
+}
+
+@container (min-width: 70rem) {
+  .allies-track {
+    --visible: 4;
+  }
 }
 
 .close-band {
@@ -1292,24 +1407,9 @@ a {
   }
 
   .allies-intro {
-    grid-template-columns: minmax(12rem, 0.7fr) 1.1fr;
-    gap: 0.75rem 2rem;
-    align-items: end;
-  }
-
-  .allies-nav {
-    display: block;
-  }
-
-  .allies-list {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.75rem;
-  }
-
-  .allies-list li:last-child {
-    grid-column: auto;
-    justify-self: stretch;
-    width: auto;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem 2.5rem;
+    align-items: baseline;
   }
 
   .site-footer {
@@ -1351,7 +1451,9 @@ a {
 
   .hero-copy,
   .gate .photo-img,
-  .ally {
+  .ally,
+  .allies-track,
+  .allies-dot::before {
     animation: none;
     transition: none;
   }
