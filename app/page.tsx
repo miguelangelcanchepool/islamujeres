@@ -110,7 +110,7 @@ export default function HomePage() {
         <p className="watermark" aria-hidden="true">
           Mujeres
         </p>
-        <p className="chapter-kicker">01 — La invitación</p>
+        <p className="chapter-kicker">01 — BIENVENIDA</p>
         <h2>Entrar es cambiar de ritmo.</h2>
         <div className="manifesto-grid">
           <p className="lede">
