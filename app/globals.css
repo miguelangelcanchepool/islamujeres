@@ -1276,6 +1276,24 @@ a {
   border-top: 1px solid var(--line);
 }
 
+.site-credits {
+  margin: 0;
+  padding: 0.85rem var(--pad) 1.05rem;
+  border-top: 1px solid var(--line);
+  background: #061018;
+  color: rgba(231, 211, 180, 0.62);
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.site-credits-mark {
+  color: var(--sand);
+}
+
 .footer-brand {
   display: flex;
   flex-direction: column;
