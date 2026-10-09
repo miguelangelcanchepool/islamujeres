@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { PlaceGuideLoader } from "@/components/map/PlaceGuideLoader";
 import { Photo } from "@/components/Photo";
 import { media, type Media } from "@/lib/media";
+import { getPublishedPlaces } from "@/lib/places/repository";
 
 export const metadata: Metadata = {
   title: "Lugares",
   description:
-    "Playa Norte, el centro, Punta Sur, la costa oriental, el panteón y Hacienda Mundaca: los lugares que explican Isla Mujeres.",
+    "Mapa de Isla Mujeres para situar Playa Norte, el centro, Punta Sur, la costa oriental, el panteón y Hacienda Mundaca, además de una guía de lugares públicos.",
 };
 
 const places: {
@@ -62,6 +64,8 @@ const places: {
 ];
 
 export default function LugaresPage() {
+  const guidePlaces = getPublishedPlaces();
+
   return (
     <main id="contenido">
       <header className="text-hero">
@@ -71,7 +75,30 @@ export default function LugaresPage() {
           No es un directorio. Es una secuencia: del agua más clara al recuerdo
           más quieto.
         </p>
+        <a className="link-arrow" href="#guia">
+          Explorar el mapa
+        </a>
       </header>
+
+      <section className="guide" id="guia" aria-labelledby="guia-titulo">
+        <header className="guide-intro">
+          <p className="chapter-kicker">El mapa</p>
+          <h2 id="guia-titulo">Encontrar la isla, lugar por lugar.</h2>
+          <p>
+            Playas, pueblo y punta sur, situados sobre un mapa real. Las
+            coordenadas de los lugares públicos vienen de OpenStreetMap. Los
+            aliados de demostración se reconocen en la lista y todavía no
+            tienen ubicación ni datos de contacto.
+          </p>
+        </header>
+        <PlaceGuideLoader places={guidePlaces} />
+        <noscript>
+          <p className="guide-note">
+            El mapa interactivo necesita JavaScript. La secuencia de lugares
+            sigue debajo.
+          </p>
+        </noscript>
+      </section>
 
       {places.map((place, index) => (
         <article

@@ -1477,6 +1477,421 @@ a {
   }
 }
 
+.atlas-copy {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.atlas-invite {
+  margin: 0.2rem 0 0;
+  color: var(--sand);
+}
+
+.guide {
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--pad) clamp(3rem, 7vw, 5.5rem);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(26, 168, 174, 0.16), transparent 42%),
+    var(--deep);
+  scroll-margin-top: var(--header);
+}
+
+.guide-intro h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 4.8rem);
+}
+
+.guide-intro p:last-child {
+  max-width: 40rem;
+  margin-bottom: 0;
+}
+
+.guide-body {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+
+.guide-filters {
+  display: flex;
+  gap: 0.45rem;
+  margin: 0;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+}
+
+.guide-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--shell);
+  padding: 0.45rem 0.75rem;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.guide-filter.is-current {
+  border-color: transparent;
+  background: var(--turquoise);
+  color: var(--abyss);
+}
+
+.guide-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.72;
+}
+
+.guide-stage {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.island-map {
+  position: relative;
+  height: min(68svh, 36rem);
+  min-height: 20rem;
+  overflow: hidden;
+  background: #0c1c24;
+}
+
+.island-map-canvas,
+.island-map .maplibregl-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.island-map-status {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 1.5rem;
+  background: rgba(7, 22, 30, 0.72);
+  text-align: center;
+}
+
+.island-map-status button,
+.place-card-close,
+.place-card-shots button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--shell);
+  font: inherit;
+  cursor: pointer;
+}
+
+.island-map-status button,
+.place-card-close {
+  padding: 0.45rem 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.island-map .maplibregl-ctrl-attrib {
+  max-width: min(100%, 18rem);
+  background: rgba(7, 22, 30, 0.82);
+  color: rgba(243, 238, 230, 0.78);
+  font-size: 0.65rem;
+}
+
+.island-map .maplibregl-ctrl-attrib a {
+  color: var(--aqua);
+}
+
+.map-pin {
+  display: block;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 2px solid #07161e;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(243, 238, 230, 0.7);
+  cursor: pointer;
+}
+
+.map-pin.is-selected {
+  width: 18px;
+  height: 18px;
+  box-shadow: 0 0 0 5px rgba(143, 227, 220, 0.45);
+}
+
+.map-pin.is-featured {
+  border-radius: 2px;
+  box-shadow: 0 0 0 3px rgba(231, 211, 180, 0.9);
+}
+
+.map-pin.is-ally {
+  box-shadow: 0 0 0 2px rgba(143, 227, 220, 0.7);
+}
+
+.map-pin-playas { background: #1aa8ae; }
+.map-pin-cultura { background: #e7d3b4; }
+.map-pin-gastronomia { background: #e7c7a4; }
+.map-pin-hoteles { background: #f3eee6; }
+.map-pin-tours { background: #8fe3dc; }
+.map-pin-aliados { background: #c6a56f; }
+
+.guide-panel {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.guide-hint,
+.guide-note,
+.guide-empty,
+.place-card-note {
+  margin: 0;
+  color: var(--sand);
+}
+
+.guide-results-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+
+.guide-list {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 34rem;
+  overflow: auto;
+}
+
+.guide-result {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.15rem 0.75rem;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  color: inherit;
+  padding: 0.8rem 0.15rem;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.guide-result.is-current {
+  background: rgba(143, 227, 220, 0.08);
+}
+
+.guide-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: var(--turquoise);
+}
+
+.guide-dot.is-featured {
+  border-radius: 2px;
+}
+
+.guide-dot-playas { background: #1aa8ae; }
+.guide-dot-cultura { background: #e7d3b4; }
+.guide-dot-gastronomia { background: #e7c7a4; }
+.guide-dot-hoteles { background: #f3eee6; }
+.guide-dot-tours { background: #8fe3dc; }
+.guide-dot-aliados { background: #c6a56f; }
+
+.guide-result-copy {
+  display: grid;
+  min-width: 0;
+}
+
+.guide-result-copy strong {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1;
+}
+
+.guide-result-copy span,
+.guide-badges {
+  color: var(--sand);
+  font-size: 0.82rem;
+}
+
+.guide-result .guide-badges {
+  grid-column: 2;
+}
+
+.guide-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.guide-badges em,
+.place-card .guide-badges em {
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+}
+
+.guide-badges em.is-featured {
+  color: var(--sand);
+}
+
+.place-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1rem 1.15rem;
+  background: var(--abyss);
+  color: var(--shell);
+  scroll-margin-top: calc(var(--header) + 0.75rem);
+}
+
+.place-card.is-ally {
+  box-shadow: inset 0 0 0 1px rgba(143, 227, 220, 0.45);
+}
+
+.place-card.is-featured {
+  box-shadow: inset 0 0 0 1px rgba(231, 211, 180, 0.8);
+}
+
+.place-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.place-card-top .chapter-kicker {
+  margin: 0;
+}
+
+.place-card h3 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-style: italic;
+}
+
+.place-card-summary {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.place-card-photo {
+  position: relative;
+  height: 12rem;
+}
+
+.place-card-photo .photo {
+  position: absolute;
+  inset: 0;
+}
+
+.place-card-shots {
+  position: absolute;
+  z-index: 3;
+  left: 0.6rem;
+  bottom: 0.6rem;
+  display: flex;
+  gap: 0.3rem;
+}
+
+.place-card-shots button {
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  background: rgba(7, 22, 30, 0.72);
+}
+
+.place-card-shots button[aria-selected="true"] {
+  background: var(--turquoise);
+  color: var(--abyss);
+}
+
+.place-card-facts {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.place-card-facts div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.place-card-facts dt {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+
+.place-card-facts dd {
+  margin: 0;
+}
+
+.place-card-facts p {
+  margin: 0 0 0.45rem;
+}
+
+.place-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.place-card .link-arrow {
+  margin-top: 0.15rem;
+}
+
+@media (min-width: 800px) {
+  .atlas-copy {
+    width: min(100%, 16rem);
+  }
+}
+
+@media (min-width: 960px) {
+  .guide-stage {
+    grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.8fr);
+    align-items: start;
+  }
+
+  .island-map {
+    position: sticky;
+    top: calc(var(--header) + 0.75rem);
+    height: calc(100svh - var(--header) - 1.5rem);
+  }
+
+  .guide-list {
+    max-height: calc(100svh - var(--header) - 8rem);
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;

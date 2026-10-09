@@ -156,14 +156,22 @@ export default function HomePage() {
         </div>
         <div className="atlas">
           <IslandSilhouette />
-          <ol className="atlas-marks">
-            {marks.map((mark) => (
-              <li key={mark.name}>
-                <strong>{mark.name}</strong>
-                <span>{mark.note}</span>
-              </li>
-            ))}
-          </ol>
+          <div className="atlas-copy">
+            <ol className="atlas-marks">
+              {marks.map((mark) => (
+                <li key={mark.name}>
+                  <strong>{mark.name}</strong>
+                  <span>{mark.note}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="atlas-invite">
+              El mapa sitúa playas, el pueblo y la punta sur.
+            </p>
+            <Link href="/lugares#guia" className="link-arrow">
+              Abrir el mapa
+            </Link>
+          </div>
         </div>
       </section>
 
