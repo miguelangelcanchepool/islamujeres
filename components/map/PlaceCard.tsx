@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Photo } from "@/components/Photo";
 import { categoryLabel, visibilityLabel } from "@/lib/places/categories";
 import { directionsUrl, formatCoordinates } from "@/lib/places/geo";
@@ -25,12 +25,9 @@ function digits(value: string) {
 
 export function PlaceCard({ place, onClose }: PlaceCardProps) {
   const photos = place.photos ?? [];
-  const [photoIndex, setPhotoIndex] = useState(0);
+  const [photoState, setPhotoState] = useState({ id: place.id, index: 0 });
+  const photoIndex = photoState.id === place.id ? photoState.index : 0;
   const photo = photos[photoIndex] ?? photos[0];
-
-  useEffect(() => {
-    setPhotoIndex(0);
-  }, [place.id]);
 
   const whatsappDigits = place.whatsapp ? digits(place.whatsapp) : "";
 
@@ -67,7 +64,7 @@ export function PlaceCard({ place, onClose }: PlaceCardProps) {
                   type="button"
                   role="tab"
                   aria-selected={index === photoIndex}
-                  onClick={() => setPhotoIndex(index)}
+                  onClick={() => setPhotoState({ id: place.id, index })}
                 >
                   {index + 1}
                 </button>

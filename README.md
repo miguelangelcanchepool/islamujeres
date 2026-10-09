@@ -36,7 +36,7 @@ El proyecto es una aplicación Next.js. Para publicarlo:
 
 La guía de `/lugares` usa MapLibre GL JS y el estilo público de [OpenFreeMap](https://openfreemap.org/). No hace falta una clave. La atribución del mapa debe seguir visible: OpenFreeMap, OpenMapTiles y OpenStreetMap.
 
-El estilo se puede cambiar con `NEXT_PUBLIC_MAP_STYLE_URL`. El valor de ejemplo usa el estilo `fiord`.
+El estilo se puede cambiar con `NEXT_PUBLIC_MAP_STYLE_URL`. El valor de ejemplo usa el estilo `fiord`. El worker de MapLibre se copia a `public/maplibre-gl-worker.mjs` al instalar dependencias.
 
 Los lugares salen del catálogo local `lib/places/catalog.ts`. No hay conexión con Supabase. Los registros marcados como demostración no son negocios reales, y no se publican teléfonos ni direcciones que no estén verificados. Un borrador en ese archivo no aparece en la guía.
 

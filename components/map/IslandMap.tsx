@@ -7,11 +7,16 @@ import {
   Map,
   Marker,
   NavigationControl,
+  setWorkerUrl,
 } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { islandCenter, islandMaxBounds, mapStyleUrl } from "@/lib/map/style";
 import { hasCoordinates } from "@/lib/places/geo";
 import type { Place } from "@/lib/places/types";
+
+if (typeof window !== "undefined") {
+  setWorkerUrl("/maplibre-gl-worker.mjs");
+}
 
 type IslandMapProps = {
   places: Place[];
@@ -67,23 +72,21 @@ export function IslandMap({ places, selectedId, onSelect }: IslandMapProps) {
     );
     map.addControl(new AttributionControl({ compact: false }), "bottom-right");
 
-    const fail = () => {
-      if (active) setStatus("error");
-    };
-    const timer = window.setTimeout(() => {
-      if (!map.loaded()) fail();
-    }, 12000);
-
-    map.on("load", () => {
+    const markReady = () => {
       if (!active) return;
       window.clearTimeout(timer);
       map.resize();
       setStatus("ready");
-    });
-    map.on("error", (event) => {
-      const message = event.error?.message ?? "";
-      if (!map.loaded() && /style|fetch|network|ajax|Failed/i.test(message)) fail();
-    });
+    };
+    const fail = () => {
+      if (active && !map.isStyleLoaded()) setStatus("error");
+    };
+    const timer = window.setTimeout(() => {
+      if (map.isStyleLoaded()) markReady();
+      else fail();
+    }, 12000);
+
+    map.on("style.load", markReady);
     map.on("click", () => {
       if (ignoreMapClick.current) {
         ignoreMapClick.current = false;
@@ -205,7 +208,7 @@ export function IslandMap({ places, selectedId, onSelect }: IslandMapProps) {
       ) : null}
       {status === "error" ? (
         <div className="island-map-status" role="alert">
-          <p>No se pudo cargar el mapa. La lista de lugares sigue disponible.</p>
+          <p>No se pudo iniciar el mapa. El estilo viene de OpenFreeMap y no usa una clave; si la red responde, reintenta.</p>
           <button
             type="button"
             onClick={() => {
