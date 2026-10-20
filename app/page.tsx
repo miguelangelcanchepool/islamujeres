@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import Link from "next/link";
-import { AlliesSection } from "@/components/AlliesSection";
+import { AlliesPending, AlliesSection } from "@/components/AlliesSection";
 import { IslandSilhouette } from "@/components/IslandSilhouette";
 import { Photo } from "@/components/Photo";
 import { media } from "@/lib/media";
+import { getPublicSponsors } from "@/lib/sponsors/repository";
 
 const gates = [
   {
@@ -201,7 +203,9 @@ export default function HomePage() {
         ))}
       </section>
 
-      <AlliesSection />
+      <Suspense fallback={<AlliesPending />}>
+        <HomeSponsors />
+      </Suspense>
 
       <section className="close-band">
         <p className="chapter-kicker">Para empezar</p>
@@ -216,4 +220,9 @@ export default function HomePage() {
       </section>
     </main>
   );
+}
+
+async function HomeSponsors() {
+  const sponsors = await getPublicSponsors();
+  return <AlliesSection sponsors={sponsors} />;
 }

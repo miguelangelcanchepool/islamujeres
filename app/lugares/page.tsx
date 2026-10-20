@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { PlaceGuideLoader } from "@/components/map/PlaceGuideLoader";
 import { Photo } from "@/components/Photo";
@@ -63,9 +64,24 @@ const places: {
   },
 ];
 
-export default function LugaresPage() {
-  const guidePlaces = getPublishedPlaces();
+async function PublishedPlaceGuide() {
+  const guidePlaces = await getPublishedPlaces();
+  return <PlaceGuideLoader places={guidePlaces} />;
+}
 
+function PlaceGuidePending() {
+  return (
+    <div className="guide-stage">
+      <div className="island-map">
+        <p className="island-map-status" role="status">
+          Cargando el mapa…
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function LugaresPage() {
   return (
     <main id="contenido">
       <header className="text-hero">
@@ -91,7 +107,9 @@ export default function LugaresPage() {
             tienen ubicación ni datos de contacto.
           </p>
         </header>
-        <PlaceGuideLoader places={guidePlaces} />
+        <Suspense fallback={<PlaceGuidePending />}>
+          <PublishedPlaceGuide />
+        </Suspense>
         <noscript>
           <p className="guide-note">
             El mapa interactivo necesita JavaScript. La secuencia de lugares

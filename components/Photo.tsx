@@ -26,7 +26,7 @@ export function Photo({
         sizes={sizes}
         className="photo-img"
       />
-      <figcaption className="photo-credit">{image.author}</figcaption>
+      {image.author ? <figcaption className="photo-credit">{image.author}</figcaption> : null}
     </figure>
   );
 }

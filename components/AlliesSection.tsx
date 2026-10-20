@@ -10,19 +10,22 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 
+import type { PublicSponsor, PublicSponsorsResult } from "@/lib/sponsors/types";
+
 type Ally = {
+  id: string;
   name: string;
-  label: string;
+  label: string | null;
   logo: string | null;
-  href: string;
+  href: string | null;
 };
 
-const allies: Ally[] = [
-  { name: "ISLA MARINA", label: "DEMO", logo: null, href: "#" },
-  { name: "CARIBE TOURS", label: "DEMO", logo: null, href: "#" },
-  { name: "MAYA BEACH", label: "DEMO", logo: null, href: "#" },
-  { name: "MAR AZUL", label: "DEMO", logo: null, href: "#" },
-  { name: "ISLA LIFE", label: "DEMO", logo: null, href: "#" },
+const demoAllies: Ally[] = [
+  { id: "demo-isla-marina", name: "ISLA MARINA", label: "DEMO", logo: null, href: "#" },
+  { id: "demo-caribe-tours", name: "CARIBE TOURS", label: "DEMO", logo: null, href: "#" },
+  { id: "demo-maya-beach", name: "MAYA BEACH", label: "DEMO", logo: null, href: "#" },
+  { id: "demo-mar-azul", name: "MAR AZUL", label: "DEMO", logo: null, href: "#" },
+  { id: "demo-isla-life", name: "ISLA LIFE", label: "DEMO", logo: null, href: "#" },
 ];
 
 const AUTOPLAY_MS = 6500;
@@ -32,7 +35,46 @@ function hasLogo(logo: string | null) {
   return typeof logo === "string" && logo.length > 0;
 }
 
-export function AlliesSection() {
+export function AlliesPending() {
+  return (
+    <section className="allies" id="aliados" aria-labelledby="aliados-titulo">
+      <div className="allies-intro">
+        <h2 id="aliados-titulo">Aliados de la isla</h2>
+        <p>Cargando patrocinadores…</p>
+      </div>
+    </section>
+  );
+}
+
+export function AlliesSection({ sponsors }: { sponsors: PublicSponsorsResult }) {
+  if (!sponsors.ok) return <AlliesUnavailable />;
+  const allies = sponsors.sponsors.length > 0 ? fromDatabase(sponsors.sponsors) : demoAllies;
+  return <AlliesCarousel allies={allies} />;
+}
+
+function AlliesUnavailable() {
+  return (
+    <section className="allies" id="aliados" aria-labelledby="aliados-titulo">
+      <div className="allies-intro">
+        <h2 id="aliados-titulo">Aliados de la isla</h2>
+        <p>Empresas y marcas que creen en compartir lo mejor de Isla Mujeres.</p>
+        <p role="alert">No se pudieron cargar los patrocinadores.</p>
+      </div>
+    </section>
+  );
+}
+
+function fromDatabase(sponsors: PublicSponsor[]): Ally[] {
+  return sponsors.map((sponsor) => ({
+    id: sponsor.id,
+    name: sponsor.name,
+    label: null,
+    logo: sponsor.logoUrl,
+    href: sponsor.websiteUrl,
+  }));
+}
+
+function AlliesCarousel({ allies }: { allies: Ally[] }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
   const pauseUntil = useRef(0);
@@ -162,16 +204,13 @@ export function AlliesSection() {
     else prev();
   }
 
-  function onAllyClick(
-    event: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) {
+  function onAllyClick(event: React.MouseEvent<HTMLAnchorElement>, href: string | null) {
     if (drag.current.moved) {
       event.preventDefault();
       drag.current.moved = false;
       return;
     }
-    if (href === "#") event.preventDefault();
+    if (!href || href === "#") event.preventDefault();
   }
 
   return (
@@ -224,27 +263,10 @@ export function AlliesSection() {
             {slides.map((ally, slideIndex) => (
               <li
                 className="ally-slide"
-                key={`${ally.name}-${slideIndex}`}
+                key={`${ally.id}-${slideIndex}`}
                 aria-hidden={slideIndex >= count}
               >
-                <a
-                  className="ally"
-                  href={ally.href}
-                  tabIndex={slideIndex >= count ? -1 : undefined}
-                  onClick={(event) => onAllyClick(event, ally.href)}
-                >
-                  {hasLogo(ally.logo) ? (
-                    <Image
-                      className="ally-logo"
-                      src={ally.logo as string}
-                      alt=""
-                      width={120}
-                      height={32}
-                    />
-                  ) : null}
-                  <span className="ally-name">{ally.name}</span>
-                  <span className="ally-label">{ally.label}</span>
-                </a>
+                <AllyMark ally={ally} hidden={slideIndex >= count} onClick={onAllyClick} />
               </li>
             ))}
           </ul>
@@ -266,7 +288,7 @@ export function AlliesSection() {
       <div className="allies-dots" role="tablist" aria-label="Aliados visibles">
         {allies.map((ally, dotIndex) => (
           <button
-            key={ally.name}
+            key={ally.id}
             type="button"
             className={
               canSlide && dotIndex === active
@@ -289,5 +311,43 @@ export function AlliesSection() {
         ¿Quieres formar parte de Descubre Isla Mujeres?
       </a>
     </section>
+  );
+}
+
+function AllyMark({
+  ally,
+  hidden,
+  onClick,
+}: {
+  ally: Ally;
+  hidden: boolean;
+  onClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string | null) => void;
+}) {
+  const logo = hasLogo(ally.logo) ? (
+    <Image className="ally-logo" src={ally.logo as string} alt="" width={154} height={41} />
+  ) : null;
+  const text = (
+    <>
+      {logo}
+      <span className="ally-name">{ally.name}</span>
+      {ally.label ? <span className="ally-label">{ally.label}</span> : null}
+    </>
+  );
+
+  if (!ally.href) return <div className="ally">{text}</div>;
+
+  const external = ally.href.startsWith("http://") || ally.href.startsWith("https://");
+
+  return (
+    <a
+      className="ally"
+      href={ally.href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      tabIndex={hidden ? -1 : undefined}
+      onClick={(event) => onClick(event, ally.href)}
+    >
+      {text}
+    </a>
   );
 }

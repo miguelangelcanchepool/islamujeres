@@ -38,9 +38,9 @@ La guía de `/lugares` usa MapLibre GL JS y el estilo público de [OpenFreeMap](
 
 El estilo se puede cambiar con `NEXT_PUBLIC_MAP_STYLE_URL`. El valor de ejemplo usa el estilo `fiord`. El worker de MapLibre se copia a `public/maplibre-gl-worker.mjs` al instalar dependencias.
 
-Los lugares salen del catálogo local `lib/places/catalog.ts`. No hay conexión con Supabase. Los registros marcados como demostración no son negocios reales, y no se publican teléfonos ni direcciones que no estén verificados. Un borrador en ese archivo no aparece en la guía.
+Los lugares publicados salen de Supabase cuando el servidor tiene `SUPABASE_URL` y `SUPABASE_ANON_KEY`. Esas variables no llevan el prefijo `NEXT_PUBLIC_`. Si faltan, la guía usa el catálogo local `lib/places/catalog.ts` y el mapa sigue funcionando. Los registros de demostración no son negocios reales, y no se publican teléfonos ni direcciones que no estén verificados. Un borrador no aparece en la guía.
 
-`supabase/schema.sql` es un borrador para una fase posterior. No está aplicado.
+En el editor SQL de Supabase ejecuta primero `supabase/schema.sql` y después `supabase/seed.sql`. La siembra se puede repetir: no duplica los 21 registros. El sitio todavía no tiene panel ni autenticación.
 
 ## Fotografías
 

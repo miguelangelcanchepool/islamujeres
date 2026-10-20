@@ -2,7 +2,8 @@ import { media } from "@/lib/media";
 import type { Place } from "@/lib/places/types";
 
 /**
- * Catálogo de la fase 1. Sustituible por Supabase sin cambiar el mapa.
+ * Catálogo local. La guía lo usa cuando el servidor no tiene Supabase.
+ * Los mismos 21 slug están en supabase/seed.sql.
  *
  * Las coordenadas de lugares públicos salen de OpenStreetMap (consultadas
  * el 8 de octubre de 2026). No hay teléfonos, horarios, reseñas ni sitios
