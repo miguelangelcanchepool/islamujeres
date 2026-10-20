@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Suspense } from "react";
 import { SiteCredits } from "@/components/SiteCredits";
 import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
+import { SiteHeader, SiteHeaderFallback } from "@/components/SiteHeader";
 import { siteDescription, siteName, siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -56,7 +57,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a className="skip-link" href="#contenido">
           Saltar al contenido
         </a>
-        <SiteHeader />
+        <Suspense fallback={<SiteHeaderFallback />}>
+          <SiteHeader />
+        </Suspense>
         {children}
         <SiteFooter />
         <SiteCredits />

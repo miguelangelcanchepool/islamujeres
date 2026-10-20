@@ -33,6 +33,31 @@ export function SiteHeader() {
   }, [open]);
 
   return (
+    <SiteHeaderShell
+      pathname={pathname}
+      solid={solid}
+      open={open}
+      onToggle={() => setOpenPath(open ? null : pathname)}
+    />
+  );
+}
+
+export function SiteHeaderFallback() {
+  return <SiteHeaderShell pathname={null} solid={false} open={false} />;
+}
+
+function SiteHeaderShell({
+  pathname,
+  solid,
+  open,
+  onToggle,
+}: {
+  pathname: string | null;
+  solid: boolean;
+  open: boolean;
+  onToggle?: () => void;
+}) {
+  return (
     <header className={`site-header${solid || open ? " is-solid" : ""}${open ? " is-open" : ""}`}>
       <div className="header-bar">
         <Link href="/" className="brand">
@@ -56,7 +81,7 @@ export function SiteHeader() {
           className="menu-button"
           aria-expanded={open}
           aria-controls="menu-principal"
-          onClick={() => setOpenPath(open ? null : pathname)}
+          onClick={onToggle}
         >
           {open ? "Cerrar" : "Menú"}
         </button>
